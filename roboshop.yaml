@@ -32,9 +32,10 @@
     amazon.aws.route53:
       state: present
       zone: "{{ domain_name }}"
-      record: "{{ item.item }}-{{ env }}.{{ domain_name }}" # mongodb-dev.Lavanya2090, frontend-dev.Lavanya2090
+      record: "roboshop-{{ env }}.{{ domain_name }}" # mongodb-dev.Lavanya2090, frontend-dev.Lavanya2090
       type: A
       ttl: 60
       value: "{{ item.instances[0].public_ip_address }}"
       wait: true
     loop: "{{ ec2_output.results }}"
+    when: item.item == "frontend"
