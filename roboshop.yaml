@@ -4,6 +4,7 @@
   vars:
     sg_ID: sg-057298e491bdfde23
     AMI_ID: ami-0cca150d127c2216f
+    domain_nmae: Lavanya2090
     env: dev
     instances:
       - mongodb
@@ -26,3 +27,13 @@
   - name: print ec2 output
     ansible.builtin.debug:
       msg: "{{ ec2_output }}"
+
+  - name: create route53 record
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain_nmae }}""
+      record: "{{ item.item }}-{{ env }}.{{ domain_name }}" # mongodb-dev.Lavanya2090, frontend-dev.Lavanya2090
+      type: A
+      ttl: 60
+      value: "{{ item.instances[0].public_ip_address }}"
+    loop: "{{ ec2_output.results }}"
