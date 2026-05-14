@@ -6,8 +6,8 @@
     AMI_ID: ami-0cca150d127c2216f
     env: dev
     instances:
-      mongodb
-      catalogue
+      - mongodb
+      - catalogue
   tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
