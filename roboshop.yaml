@@ -36,4 +36,5 @@
       type: A
       ttl: 60
       value: "{{ item.instances[0].public_ip_address }}"
+      wait: true
     loop: "{{ ec2_output.results }}"
